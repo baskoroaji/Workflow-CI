@@ -37,9 +37,14 @@ jobs:
               run: |
                   mlflow run MLProject --env-manager=local
             
+            - name: Debug mlruns contents
+              run: |
+                  echo "Listing mlruns directory:"
+                  ls -R mlruns
+                          
             - name: Get latest MLflow run_id
               run: |
-                    echo "RUN_ID=$(ls -td mlruns/0/*/ | head -n1 | xargs basename)" >> $GITHUB_ENV
+                    echo "RUN_ID=$(ls -td mlruns/*/ | head -n1 | xargs basename)" >> $GITHUB_ENV
 
             - name: Build Docker Model
               run: |
