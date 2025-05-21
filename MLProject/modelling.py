@@ -23,7 +23,6 @@ with mlflow.start_run():
     
     n_estimators = 200
     max_depth = 20
-    mlflow.autolog()
     model = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth)
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)

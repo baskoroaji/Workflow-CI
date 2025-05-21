@@ -51,18 +51,23 @@ jobs:
               run: |
                     sudo apt-get update && sudo apt-get install git-lfs -y
                     git lfs install
+                    
             - name: Track MLflow model artifacts
               run: |
-                git lfs track "mlruns/"
+                ls -R mlruns/0/$RUN_ID/model
+                git lfs track "mlruns/0/$RUN_ID/artifacts/model/**"
                 git add .gitattributes
+
             - name: Configure Git user
               run: |
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
+
             - name: Commit MLflow artifacts
               run: |
-                git add mlruns/
+                git add mlruns/0/$RUN_ID/artifacts/model/
                 git diff --quiet && echo "No new artifacts to commit" || git commit -m "chore: add MLflow model artifacts for run $RUN_ID [skip ci]"
+
             - name: Push artifacts to GitHub
               run: git push -u origin main
 
