@@ -40,11 +40,11 @@ jobs:
             - name: Debug mlruns contents
               run: |
                   echo "Listing mlruns directory:"
-                  ls -R mlruns
+                  ls -R mlruns/0/
                           
             - name: Get latest MLflow run_id
               run: |
-                    echo "RUN_ID=$(ls -td mlruns/0/ | head -n1 | xargs basename)" >> $GITHUB_ENV
+                    echo "RUN_ID=$(ls -td mlruns/0/*/ | head -n1 | xargs basename)" >> $GITHUB_ENV
 
             - name: Build Docker Model
               run: |
