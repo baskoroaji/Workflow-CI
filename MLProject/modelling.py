@@ -11,13 +11,11 @@ if __name__ == "__main__":
     train_path = sys.argv[1]
     test_path = sys.argv[2]
 
-TRAIN_PATH = "supplement_sales_preprocessed/sales_train_preprocessed.csv"
-train_data = pd.read_csv(TRAIN_PATH)
-TEST_PATH = "supplement_sales_preprocessed/sales_test_preprocessed.csv"
-test_data = pd.read_csv(TEST_PATH)
+train_data = pd.read_csv(train_path)
+test_data = pd.read_csv(test_path)
 
-X_train, y_train = train_data(drop="Revenue", axis=1), train_data["Revenue"]
-X_test, y_test = test_data(drop="Revenue", axis=1), test_data["Revenue"]
+X_train, y_train = train_data.drop("Revenue", axis=1), train_data["Revenue"]
+X_test, y_test = test_data.drop("Revenue", axis=1), test_data["Revenue"]
 input_example = X_train[0:5]
 
 
