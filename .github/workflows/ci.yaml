@@ -40,11 +40,12 @@ jobs:
             - name: Debug mlruns contents
               run: |
                   echo "Listing mlruns directory:"
-                  ls -R mlruns/0/
+                  ls -R mlruns/
                           
             - name: Get latest MLflow run_id
               run: |
                    echo "RUN_ID=$(ls -td mlruns/0/*/ | head -n1 | xargs basename)" >> $GITHUB_ENV
+
             - name: Install Git LFS
               run: |
                     sudo apt-get update && sudo apt-get install git-lfs -y
@@ -52,7 +53,7 @@ jobs:
 
             - name: Track MLflow model artifacts
               run: |
-                git lfs track "mlruns/0/$RUN_ID/artifacts/model/**"
+                git lfs track "mlruns/0/**"
                 git add .gitattributes
 
             - name: Configure Git user
@@ -62,7 +63,7 @@ jobs:
 
             - name: Commit MLflow artifacts
               run: |
-                git add mlruns/0/$RUN_ID/artifacts/model/
+                git add mlruns/0/${{ env.RUN_ID }}/artifacts/model/
                 git diff --quiet && echo "No new artifacts to commit" || git commit -m "chore: add MLflow model artifacts for run $RUN_ID [skip ci]"
 
             - name: Push artifacts to GitHub
