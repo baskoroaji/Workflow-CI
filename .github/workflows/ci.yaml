@@ -44,9 +44,7 @@ jobs:
                           
             - name: Get latest MLflow run_id
               run: |
-                  RUN_ID=$(find mlruns/0 -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | grep -v datasets | sort -r | head -n 1)
-                  echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-                  echo "Latest run_id: $RUN_ID"
+                   echo "RUN_ID=$(ls -td mlruns/0/*/ | head -n1 | xargs basename)" >> $GITHUB_ENV
             - name: Install Git LFS
               run: |
                     sudo apt-get update && sudo apt-get install git-lfs -y
