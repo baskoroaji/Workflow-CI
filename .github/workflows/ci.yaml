@@ -51,10 +51,9 @@ jobs:
               run: |
                     sudo apt-get update && sudo apt-get install git-lfs -y
                     git lfs install
-                    
+
             - name: Track MLflow model artifacts
               run: |
-                ls -R mlruns/0/$RUN_ID/model
                 git lfs track "mlruns/0/$RUN_ID/artifacts/model/**"
                 git add .gitattributes
 
