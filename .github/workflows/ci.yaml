@@ -19,6 +19,7 @@ jobs:
               uses: actions/checkout@v4
               with:
                 persist-credentials: true
+                fetch-depth: 0
 
 
             - name: Set up Python 3.12
@@ -38,9 +39,7 @@ jobs:
             
             - name: Get latest MLflow run_id
               run: |
-                    RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
-                    echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-                    echo "Latest run_id: $RUN_ID"
+                    echo "RUN_ID=$(ls -td mlruns/0/*/ | head -n1 | xargs basename)" >> $GITHUB_ENV
 
             - name: Build Docker Model
               run: |
