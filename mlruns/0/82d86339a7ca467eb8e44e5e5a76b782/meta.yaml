@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/MSML_Dicoding/Workflow-CI/mlruns/0/82d86339a7ca467eb8e44e5e5a76b782/artifacts
+end_time: 1747867266661
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 82d86339a7ca467eb8e44e5e5a76b782
+run_name: bold-ram-912
+run_uuid: 82d86339a7ca467eb8e44e5e5a76b782
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747867237735
+status: 3
+tags: []
+user_id: user
