@@ -2,7 +2,7 @@ import mlflow
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import random
 import numpy as np
 import sys
@@ -16,9 +16,8 @@ train_data = pd.read_csv(TRAIN_PATH)
 TEST_PATH = "supplement_sales_preprocessed/sales_test_preprocessed.csv"
 test_data = pd.read_csv(TEST_PATH)
 
-X_train, X_test, y_train, y_test = train_test_split(
-    train_data.drop("Revenue", axis=1), train_data["Revenue"], test_size=0.2, random_state=42
-)
+X_train, y_train = train_data(drop="Revenue", axis=1), train_data["Revenue"]
+X_test, y_test = test_data(drop="Revenue", axis=1), test_data["Revenue"]
 input_example = X_train[0:5]
 
 
@@ -33,9 +32,13 @@ with mlflow.start_run():
     r2 = model.score(X_test, y_test)
     mae = mean_absolute_error(y_test, y_pred)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    n = len(y_test)                  
+    p = X_test.shape[1]
+    adjusted_r2 = 1 - (1 - r2) * ((n - 1) / (n - p - 1))
     mlflow.log_metric("r2_score", r2)
     mlflow.log_metric("mae", mae)
     mlflow.log_metric("rmse", rmse)
+    mlflow.log_metric("adjusted_r2", adjusted_r2)
     mlflow.sklearn.log_model(
         sk_model = model,
         artifact_path="model",
