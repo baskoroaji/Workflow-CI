@@ -53,7 +53,7 @@ jobs:
                     git lfs install
             - name: Track MLflow model artifacts
               run: |
-                git lfs track "mlruns/0/$RUN_ID/artifacts/model/**"
+                git lfs track "mlruns/"
                 git add .gitattributes
             - name: Configure Git user
               run: |
@@ -61,7 +61,7 @@ jobs:
                   git config user.email "github-actions[bot]@users.noreply.github.com"
             - name: Commit MLflow artifacts
               run: |
-                git add mlruns/0/$RUN_ID/artifacts/model/
+                git add mlruns/
                 git diff --quiet && echo "No new artifacts to commit" || git commit -m "chore: add MLflow model artifacts for run $RUN_ID [skip ci]"
             - name: Push artifacts to GitHub
               run: git push -u origin main
