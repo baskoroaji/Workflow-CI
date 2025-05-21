@@ -16,11 +16,9 @@ test_data = pd.read_csv(test_path)
 
 X_train, y_train = train_data.drop("Revenue", axis=1), train_data["Revenue"]
 X_test, y_test = test_data.drop("Revenue", axis=1), test_data["Revenue"]
-input_example = X_train[0:5]
 
 
 with mlflow.start_run():
-    
     n_estimators = 200
     max_depth = 20
     model = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth)
@@ -36,8 +34,4 @@ with mlflow.start_run():
     mlflow.log_metric("mae", mae)
     mlflow.log_metric("rmse", rmse)
     mlflow.log_metric("adjusted_r2", adjusted_r2)
-    mlflow.sklearn.log_model(
-        sk_model = model,
-        artifact_path="model",
-        input_example=input_example
-    )
+    mlflow.sklearn.log_model(model, "model")
