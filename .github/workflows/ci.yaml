@@ -52,7 +52,10 @@ jobs:
                           
             - name: Get latest MLflow run_id
               run: |
-                   echo "RUN_ID=$(ls -td mlruns/0/*/ | head -n1 | xargs basename)" >> $GITHUB_ENV
+                   run: |
+                      RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
+                      echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+                      echo "Latest run_id: $RUN_ID"
 
             - name: Set up Git LFS
               run: |
@@ -75,7 +78,7 @@ jobs:
   
             - name: Build Docker Model
               run: |
-                  mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "ss-model" 
+                  mlflow models build-docker --model-uri "mlruns/0/$RUN_ID/artifacts/model" --name "ss-model" 
 
             # Login to Docker Hub
             - name: Log in to Docker Hub
