@@ -71,9 +71,6 @@ jobs:
                 git add -f mlruns/
                 git commit -m "Save mlruns from CI run" || true
                 git push origin main
-                  - name: Build Docker Model
-                    run: |
-                      mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "ss-model" 
 
             # Login to Docker Hub
             - name: Log in to Docker Hub
