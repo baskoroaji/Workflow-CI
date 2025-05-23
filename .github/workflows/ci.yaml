@@ -55,6 +55,7 @@ jobs:
 
             - name: Set up Git LFS
               run: |
+                cd MLProject
                 git config --global user.name ${{ secrets.username }}
                 git config --global user.email ${{ secrets.email }}
                 git lfs install
@@ -66,14 +67,16 @@ jobs:
        # Save models to GitHub Repository
             - name: Save mlruns to repo
               run: |
+                cd MLProject
                 git config --global user.name ${{ secrets.username }}
                 git config --global user.email ${{ secrets.email }}
                 git add -f mlruns/
                 git commit -m "Save mlruns from CI run" || true
                 git push origin main
+  
             - name: Build Docker Model
               run: |
-                  mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "ss-model" 
+                  mlflow models build-docker --model-uri "runs:mlruns/0/$RUN_ID/model" --name "ss-model" 
 
             # Login to Docker Hub
             - name: Log in to Docker Hub
